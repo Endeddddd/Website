@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="section-title">
+    {{ category.name }}
+</h1>
+
+<p style="opacity:0.7; margin-bottom:30px;">
+    Товары в категории: {{ category.name }}
+</p>
+
+{% if products %}
+
+<div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:20px;
+">
+
+    {% for product in products %}
+        <div class="card" style="padding:15px;">
+
+            <h3 style="margin-bottom:10px;">
+                {{ product.name }}
+            </h3>
+
+            <p style="opacity:0.7; margin-bottom:15px;">
+                {{ product.short_description }}
+            </p>
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}"
+                     style="
+                        width:100%;
+                        height:250px;
+                        object-fit:cover;
+                        border-radius:12px;
+                        margin-bottom:10px;
+                     ">
+            {% endif %}
+
+            <h2 style="color:#5CE1E6; margin-bottom:10px;">
+                ${{ product.price }}
+            </h2>
+
+            <a href="{% url 'product_detail' product.slug %}" class="btn">
+                Подробнее
+            </a>
+
+        </div>
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<p style="opacity:0.7;">
+    В этой категории пока нет товаров
+</p>
+
+{% endif %}
+
+{% endblock %}

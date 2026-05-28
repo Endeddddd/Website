@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section style="
+    min-height:75vh;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:50px;
+">
+
+    <div>
+
+        <h1 style="
+            font-size:68px;
+            font-family:Orbitron;
+            line-height:1.2;
+            margin-bottom:25px;
+        ">
+            Технологии <br>
+            будущего уже сегодня
+        </h1>
+
+        <p style="
+            font-size:20px;
+            color:#bfc4d3;
+            max-width:600px;
+            margin-bottom:30px;
+        ">
+            Premium futuristic магазин электроники нового поколения.
+        </p>
+
+        <a href="#products" class="btn">
+            Смотреть товары
+        </a>
+
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
+         style="
+            width:500px;
+            border-radius:25px;
+            box-shadow:0 0 50px rgba(92,225,230,0.35);
+         ">
+
+</section>
+
+<h2 class="section-title" id="products">
+    Популярные товары
+</h2>
+
+<div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:30px;
+">
+
+{% for product in products %}
+
+<div class="card">
+
+    <a href="{% url 'product_detail' product.slug %}">
+
+        <img src="{{ product.image.url }}"
+             style="
+                width:100%;
+                height:260px;
+                object-fit:cover;
+             ">
+
+    </a>
+
+    <div style="padding:20px;">
+
+        <h3 style="font-size:24px; margin-bottom:10px;">
+            {{ product.name }}
+        </h3>
+
+        <p style="margin-bottom:20px; color:#bfc4d3;">
+            {{ product.short_description|truncatechars:80 }}
+        </p>
+
+        <h2 style="margin-bottom:20px; color:#5CE1E6;">
+            ${{ product.price }}
+        </h2>
+
+        <a href="{% url 'product_detail' product.slug %}" class="btn">
+            Подробнее
+        </a>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

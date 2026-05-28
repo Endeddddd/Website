@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="section-title">
+    Корзина
+</h1>
+
+{% for item in cart.items.all %}
+
+<div class="card" style="
+    margin-bottom:25px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:30px;
+">
+
+    <img src="{{ item.product.image.url }}"
+         style="
+            width:180px;
+            height:180px;
+            object-fit:cover;
+            border-radius:20px;
+         ">
+
+    <div style="flex:1;">
+
+        <h2 style="
+            margin-bottom:15px;
+            font-size:30px;
+        ">
+            {{ item.product.name }}
+        </h2>
+
+        <p style="
+            margin-bottom:12px;
+            color:#bfc4d3;
+        ">
+            Количество: {{ item.quantity }}
+        </p>
+
+        <h3 style="
+            margin-bottom:20px;
+            color:#5CE1E6;
+            font-size:28px;
+        ">
+            ${{ item.product.price }}
+        </h3>
+
+        <div style="
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+        ">
+
+            <a href="{% url 'cart_increase' item.id %}" class="btn">
+                +
+            </a>
+
+            <a href="{% url 'cart_decrease' item.id %}" class="btn">
+                -
+            </a>
+
+            <a href="{% url 'cart_remove' item.id %}" class="btn">
+                Удалить
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="card" style="
+    padding:50px;
+    text-align:center;
+">
+
+    <h2 style="
+        font-size:36px;
+        margin-bottom:20px;
+        font-family:Orbitron;
+    ">
+        Корзина пустая
+    </h2>
+
+    <a href="/" class="btn">
+        Вернуться к покупкам
+    </a>
+
+</div>
+
+{% endfor %}
+
+{% if cart.items.all %}
+
+<div style="
+    margin-top:50px;
+    text-align:right;
+">
+
+    <a href="/orders/checkout/" class="btn"
+       style="
+            font-size:20px;
+            padding:16px 36px;
+       ">
+        Перейти к оплате
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

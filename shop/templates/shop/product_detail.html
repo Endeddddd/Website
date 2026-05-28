@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card" style="
+    padding:40px;
+    max-width:900px;
+    margin:auto;
+">
+
+    <!-- PRODUCT IMAGE -->
+    <div class="product-image-wrapper">
+
+        <img src="{{ product.image.url }}" class="product-image">
+
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <h1 style="
+        font-family:Orbitron;
+        margin-bottom:15px;
+    ">
+        {{ product.name }}
+    </h1>
+
+    <p style="
+        opacity:0.8;
+        font-size:18px;
+    ">
+        {{ product.short_description }}
+    </p>
+
+    <p style="
+        font-size:24px;
+        color:#5CE1E6;
+        margin-top:15px;
+    ">
+        ${{ product.price }}
+    </p>
+
+    <!-- FIXED BUTTON -->
+    <a href="{% url 'cart_add' product.id %}" class="btn" style="margin-top:20px; display:inline-block;">
+        Добавить в корзину
+    </a>
+
+</div>
+
+<!-- STYLES -->
+<style>
+
+.product-image-wrapper{
+    width:100%;
+    max-width:500px;
+    height:400px;
+
+    margin:auto;
+    margin-bottom:30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#1A1230;
+    border-radius:16px;
+    overflow:hidden;
+
+    border:1px solid rgba(92,225,230,0.15);
+}
+
+.product-image{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    transition:0.3s;
+}
+
+.product-image-wrapper:hover .product-image{
+    transform:scale(1.05);
+}
+
+</style>
+
+{% endblock %}

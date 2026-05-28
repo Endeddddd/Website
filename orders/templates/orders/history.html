@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>История заказов</title>
+</head>
+<body>
+
+<a href="/">← На главную</a>
+
+<h1>📜 История заказов</h1>
+
+<hr>
+
+{% for order in orders %}
+
+    <div style="border:1px solid #ccc; margin:10px; padding:10px;">
+
+        <h2>🧾 Заказ #{{ order.id }}</h2>
+
+        <p><strong>Дата:</strong> {{ order.created_at }}</p>
+
+        <p>
+            📍 <strong>Адрес:</strong>
+            {{ order.shipping_address.address }}
+        </p>
+
+        <p>
+            🏙 <strong>Город:</strong>
+            {{ order.shipping_address.city }}
+        </p>
+
+        <p>
+            📞 <strong>Телефон:</strong>
+            {{ order.shipping_address.phone }}
+        </p>
+
+        <p>
+            💳 <strong>Карта:</strong> ****{{ order.card_number|slice:"-4:" }}
+        </p>
+
+        <hr>
+
+        <h3>🛍 Товары:</h3>
+
+        {% for item in order.items.all %}
+
+            <p>
+                {{ item.product.name }}
+                — {{ item.quantity }} × {{ item.price }} $
+                = <strong>{{ item.quantity|add:"0" }} × {{ item.price }}</strong>
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+{% empty %}
+    <p>У вас пока нет заказов</p>
+{% endfor %}
+
+</body>
+</html>

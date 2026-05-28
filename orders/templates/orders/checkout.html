@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="section-title">
+    Оформление заказа
+</h1>
+
+<form method="POST"
+      class="card"
+      style="
+        padding:40px;
+        max-width:700px;
+        margin:auto;
+      ">
+
+    {% csrf_token %}
+
+    <label>Адрес доставки</label>
+    {{ form.address }}
+
+    <label>Город</label>
+    {{ form.city }}
+
+    <label>Почтовый индекс</label>
+    {{ form.postal_code }}
+
+    <label>Телефон</label>
+    {{ form.phone }}
+
+    <label>Номер карты</label>
+    <input type="text"
+           id="card_number"
+           name="card_number"
+           placeholder="1234 5678 9012 3456"
+           maxlength="19">
+
+    <button type="submit" class="btn" style="width:100%; margin-top:20px;">
+        Подтвердить заказ
+    </button>
+
+</form>
+
+<!-- JS AUTO FORMAT CARD -->
+<script>
+const cardInput = document.getElementById("card_number");
+
+cardInput.addEventListener("input", function (e) {
+    let value = e.target.value;
+
+    // убираем всё кроме цифр
+    value = value.replace(/\D/g, "");
+
+    // группируем по 4 цифры
+    value = value.replace(/(.{4})/g, "$1 ");
+
+    // убираем лишний пробел в конце
+    value = value.trim();
+
+    e.target.value = value;
+});
+</script>
+
+{% endblock %}

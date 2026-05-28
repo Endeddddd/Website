@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="font-family:Orbitron; color:#5CE1E6;">
+    Поиск
+</h1>
+
+<form method="GET" action="{% url 'search' %}">
+    <input type="text" name="q" placeholder="Введите запрос..." value="{{ query }}">
+    <button class="btn" type="submit">Найти</button>
+</form>
+
+<hr style="margin:30px 0; border:1px solid rgba(92,225,230,0.2);">
+
+{% if query %}
+    <h2>Результаты по: "{{ query }}"</h2>
+
+    {% if products %}
+
+        {% for product in products %}
+
+        <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
+
+            <div class="card product-card">
+
+                <h3 style="margin-bottom:8px;">
+                    {{ product.name }}
+                </h3>
+
+                <p style="opacity:0.7;">
+                    {{ product.short_description }}
+                </p>
+
+                <h3 style="color:#5CE1E6;">
+                    ${{ product.price }}
+                </h3>
+
+            </div>
+
+        </a>
+
+        {% endfor %}
+
+    {% else %}
+        <p>Ничего не найдено</p>
+    {% endif %}
+{% endif %}
+
+<style>
+.product-card{
+    padding:18px;
+    margin-bottom:12px;
+    transition:0.25s ease;
+    cursor:pointer;
+}
+
+.product-card:hover{
+    transform:scale(1.03);
+    box-shadow:0 0 25px rgba(92,225,230,0.25);
+    border-color:#5CE1E6;
+}
+</style>
+
+{% endblock %}
